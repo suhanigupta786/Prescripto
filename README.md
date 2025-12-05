@@ -22,7 +22,7 @@ Admins control system-wide operations.
 ```
 Prescripto/
 │
-├── admin/                      # Admin Panel (React + Tailwind)
+├── admin/                      # Admin + Doctor Panel (React + Tailwind)
 │   ├── src/
 │   ├── public/
 │   ├── package.json
@@ -38,7 +38,7 @@ Prescripto/
 │   ├── server.js
 │   └── package.json
 │
-├── frontend/                   # User + Doctor Frontend (React + Tailwind)
+├── frontend/                   # User Frontend (React + Tailwind)
 │   ├── src/
 │   ├── public/
 │   ├── package.json
