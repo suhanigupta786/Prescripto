@@ -1,65 +1,224 @@
-# 🩺 Prescripto
+# 🩺 **Prescripto – Doctor Appointment Booking System**
 
-**Prescripto** is a full-stack medical appointment booking and management system that connects patients and doctors through a seamless web interface.  
-It enables users to register, book appointments, manage profiles, and store medical history securely.
+**Prescripto** is a full-stack medical appointment booking and management platform connecting **patients, doctors, and admins** through a seamless web interface.
+Users can register, book appointments, and manage their medical profiles.
+Doctors manage availability and appointments.
+Admins control system-wide operations.
 
 ---
 
-## 📂 Project Structure
+# 🌐 **Live Demo Links**
+
+| Module                             | Deployment | URL                                                                                              |
+| ---------------------------------- | ---------- | ------------------------------------------------------------------------------------------------ |
+| **Frontend (User Panel)**          | Render     | [https://prescripto-frontend-llch.onrender.com/](https://prescripto-frontend-llch.onrender.com/) |
+| **Backend (API Server)**           | Render     | [https://prescripto-backend-9fl2.onrender.com/](https://prescripto-backend-9fl2.onrender.com/)   |
+| **Admin (Admin + Doctor Panel)**   | Vercel     | [https://prescripto-likd.vercel.app/](https://prescripto-likd.vercel.app/)                       |
+
+---
+
+# 📂 **Project Structure**
 
 ```
 Prescripto/
 │
-├── admin/          # Admin panel for managing doctors, appointments, etc.
+├── admin/                      # Admin Panel (React + Tailwind)
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
 │
-├── backend/        # Node.js + Express.js server with MongoDB, JWT, Cloudinary, etc.
-│   ├── server.js
+├── backend/                    # Node.js + Express Backend
+│   ├── controllers/
+│   ├── middleware/
 │   ├── models/
 │   ├── routes/
-│   ├── controllers/
-│   ├── package.json
+│   ├── uploads/
+│   ├── config/
+│   ├── server.js
+│   └── package.json
 │
-├── frontend/       # React.js frontend for patients and doctors
+├── frontend/                   # User + Doctor Frontend (React + Tailwind)
 │   ├── src/
+│   ├── public/
 │   ├── package.json
+│   └── vite.config.js
 │
 └── README.md
 ```
 
 ---
 
-## 🚀 Tech Stack
+# 🚀 **Tech Stack**
 
-**Frontend:** React.js, Axios, TailwindCSS / CSS  
-**Backend:** Node.js, Express.js, MongoDB (Mongoose), JWT Authentication  
-**Image Storage:** Cloudinary  
-**Deployment:** Render (Backend), Vercel/Netlify (Frontend), MongoDB Atlas (Database)
+## **Frontend (User Panel)**
+
+* React.js
+* Vite
+* TailwindCSS
+* Axios
+* React Router
+* Context API
+
+## **Admin (Admin + Doctor Panel)**
+
+* React.js
+* TailwindCSS
+* Axios
+* React Router
+* Context API
+
+## **Backend**
+
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* JWT Authentication
+* Multer (file upload)
+* Cloudinary (image/document storage)
+* Razorpay (payment integration)
+
+## **Deployment**
+
+* Render (Frontend + Backend)
+* Vercel (Admin Panel)
+* MongoDB Atlas (Database)
 
 ---
 
-## ⚙️ Setup Instructions (Local Development)
+# ⭐ **Main Features**
+
+### 👨‍💼 User Features
+
+* Register / Login
+* Browse doctors
+* Book appointments
+* Payment via Razorpay
+* Cancel appointments
+* View appointment history
+* Update profile
+* Upload profile image
+
+### 🧑‍⚕️ Doctor Features
+
+* Login
+* Manage profile
+* Update availability
+* View appointments
+* Complete / cancel appointments
+* Dashboard view
+
+### 🛡️ Admin Features
+
+* Admin login
+* Add doctor
+* View doctors
+* Change doctor availability
+* View appointments
+* Cancel appointments
+* Dashboard analytics
+
+---
+
+# 🛠️ **Core Functionalities**
+
+* 🔐 JWT-based Authentication
+* 🛂 Role-based Authorization (Admin / Doctor / User)
+* 📁 File Upload using Multer
+* ☁️ Cloudinary Image & Document Storage
+* 💳 Razorpay Payment Gateway
+* 📬 Protected Routes for All Roles
+* 📊 Dashboard APIs
+
+---
+
+# 📡 **API Routes**
+
+## 🛡️ **Admin Routes**
+
+| Method | Endpoint                         | Middleware                            | Description                |
+| ------ | -------------------------------- | ------------------------------------- | -------------------------- |
+| POST   | `/api/admin/add-doctor`          | `authAdmin`, `upload.single("image")` | Add doctor                 |
+| POST   | `/api/admin/login`               | `authAdmin`                           | Admin login                |
+| POST   | `/api/admin/all-doctors`         | `authAdmin`                           | Get all doctors            |
+| POST   | `/api/admin/change-availability` | `authAdmin`                           | Change doctor availability |
+| GET    | `/api/admin/appointments`        | `authAdmin`                           | Get all appointments       |
+| POST   | `/api/admin/cancel-appointment`  | `authAdmin`                           | Cancel appointment         |
+| GET    | `/api/admin/dashboard`           | `authAdmin`                           | Dashboard data             |
+
+---
+
+## 👨‍⚕️ **Doctor Routes**
+
+| Method | Endpoint                           | Middleware   | Description            |
+| ------ | ---------------------------------- | ------------ | ---------------------- |
+| GET    | `/api/doctor/list`                 | `authDoctor` | Public list of doctors |
+| POST   | `/api/doctor/login`                | `authDoctor` | Doctor login           |
+| GET    | `/api/doctor/appointments`         | `authDoctor` | View appointments      |
+| POST   | `/api/doctor/complete-appointment` | `authDoctor` | Complete appointment   |
+| POST   | `/api/doctor/cancel-appointment`   | `authDoctor` | Cancel appointment     |
+| GET    | `/api/doctor/dashboard`            | `authDoctor` | Dashboard data         |
+| GET    | `/api/doctor/profile`              | `authDoctor` | Get profile            |
+| POST   | `/api/doctor/update-profile`       | `authDoctor` | Update profile         |
+
+---
+
+## 👤 **User Routes**
+
+| Method | Endpoint                       | Middleware                           | Description             |
+| ------ | ------------------------------ | ------------------------------------ | ----------------------- |
+| POST   | `/api/user/register`           | `authUser`                           | Register                |
+| POST   | `/api/user/login`              | `authUser`                           | Login                   |
+| GET    | `/api/user/get-profile`        | `authUser`                           | Get profile             |
+| POST   | `/api/user/update-profile`     | `upload.single('image')`, `authUser` | Update profile          |
+| POST   | `/api/user/book-appointment`   | `authUser`                           | Book appointment        |
+| GET    | `/api/user/appointments`       | `authUser`                           | List appointments       |
+| POST   | `/api/user/cancel-appointment` | `authUser`                           | Cancel appointment      |
+| POST   | `/api/user/payment-razorpay`   | `authUser`                           | Razorpay payment order  |
+| POST   | `/api/user/verify-razorpay`    | `authUser`                           | Verify Razorpay payment |
+
+---
+
+# ⚙️ **Backend Middleware**
+
+| Middleware      | Purpose               |
+| --------------- | --------------------- |
+| `authAdmin.js`  | Protect admin routes  |
+| `authDoctor.js` | Protect doctor routes |
+| `authUser.js`   | Protect user routes   |
+| `multer.js`     | File uploads          |
+
+---
+
+# 🛠️ **Installation (Local Development)**
 
 ### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/suhanigupta786/Prescripto.git
 cd Prescripto
 ```
 
+---
+
 ### 2️⃣ Install Dependencies
 
-**For Backend**
+#### Backend
+
 ```bash
 cd backend
 npm install
 ```
 
-**For Frontend**
+#### Frontend
+
 ```bash
 cd ../frontend
 npm install
 ```
 
-**(Optional) For Admin**
+#### Admin
+
 ```bash
 cd ../admin
 npm install
@@ -67,36 +226,72 @@ npm install
 
 ---
 
-### 3️⃣ Add Environment Variables  
-In your `backend` folder, create a `.env` file and add the following keys:
+# ### 3️⃣ Add Environment Variables
 
-```bash
-MONGODB_URI=your_mongodb_connection_string
+Below are the required environment variables for **Backend**, **Frontend**, and **Admin Panel**.
+
+## 🔧 **Backend (`backend/.env`)**
+
+> **Contains all sensitive keys — these stay ONLY on backend.**
+
+```
+MONGODB_URI=your_mongodb_uri
+
 CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_SECRET_KEY=your_cloudinary_secret_key
-JWT_SECRET=your_jwt_secret
+CLOUDINARY_API_KEY=your_cloudinary_key
+CLOUDINARY_SECRET_KEY=your_cloudinary_secret
+
+JWT_SECRET=your_secret_key
+
+RAZORPAY_KEY_ID=your_key_id
+RAZORPAY_KEY_SECRET=your_key_secret
+
 ADMIN_EMAIL=your_admin_email
 ADMIN_PASSWORD=your_admin_password
 ```
 
 ---
 
-### 4️⃣ Run the Project Locally
+## 🎨 **Frontend (`frontend/.env`)**
 
-**Backend:**
+> **Frontend `.env` should ONLY contain public & non-sensitive keys.**
+
+```
+VITE_BACKEND_URL=https://prescripto-backend-9fl2.onrender.com
+VITE_RAZORPAY_KEY_ID=rzp_test_RkdslWsv9J6eCT
+```
+
+---
+
+## 🛡️ **Admin Panel (`admin/.env`)**
+
+> Admin is also a frontend → only public keys allowed.
+
+```
+VITE_BACKEND_URL=https://prescripto-backend-9fl2.onrender.com
+VITE_RAZORPAY_KEY_ID=rzp_test_RkdslWsv9J6eCT
+```
+
+---
+
+# ▶️ **Run Project Locally**
+
+### Backend
+
 ```bash
 cd backend
 npm start
 ```
 
-**Frontend:**
+### Frontend
+
 ```bash
 cd frontend
 npm run dev
 ```
 
-**Admin Panel (if used):**
+### Admin
+
 ```bash
 cd admin
 npm run dev
@@ -104,77 +299,41 @@ npm run dev
 
 ---
 
-## 🌐 Deployment Instructions
+# 🌐 **Deployment Instructions**
 
-### 🖥️ Backend (Render)
-1. Push your full project to GitHub.  
-2. Go to [Render Dashboard](https://render.com).  
-3. Click **“New Web Service”**.  
-4. Connect your repository.  
-5. Under **Root Directory**, enter:
-   ```
-   backend
-   ```
-6. Add **Environment Variables** (same as `.env`).  
-7. **Build Command:**
-   ```
-   npm install
-   ```
-   **Start Command:**
-   ```
-   npm start
-   ```
-8. Deploy ✅
+## 🚀 Backend (Render)
+
+```
+Root Directory: backend
+Build Command: npm install
+Start Command: npm start
+```
 
 ---
 
-### 💻 Frontend (Vercel / Netlify)
-1. Go to [Vercel](https://vercel.com) or [Netlify](https://netlify.com).  
-2. Import your GitHub repo.  
-3. Set Root Directory to `frontend`.  
-4. Build Command:
-   ```
-   npm run build
-   ```
-   Publish Directory:
-   ```
-   dist
-   ```
-5. Deploy ✅
+## 🎨 Frontend (Render)
+
+```
+Root Directory: frontend
+Build Command: npm run build
+Publish Directory: dist
+```
 
 ---
 
-## 🧠 Proposal (Project Idea Overview)
+## 🛡️ Admin Panel (Vercel)
 
-**Problem:**  
-Patients often face difficulty finding trusted doctors and managing appointments efficiently. Clinics and hospitals also struggle with scheduling and digital record management.
-
-**Solution:**  
-Prescripto simplifies this process by providing:
-- Secure patient-doctor registration  
-- Appointment scheduling and cancellation  
-- Medical history management  
-- Cloud-based image & document storage  
-- Admin dashboard for monitoring all activities  
-
-**Outcome:**  
-An accessible, scalable, and secure digital healthcare management solution.
+```
+Root Directory: admin
+Build Command: npm run build
+Output Directory: dist
+```
 
 ---
 
-## 📜 Commands Summary
+# ✨ **Maintainer**
 
-| Task | Command |
-|------|----------|
-| Clone Repository | `git clone <repo-url>` |
-| Install Backend Dependencies | `cd backend && npm install` |
-| Start Backend | `npm start` |
-| Install Frontend Dependencies | `cd frontend && npm install` |
-| Run Frontend | `npm run dev` |
-| Deploy Backend (Render) | Build: `npm install` <br> Start: `npm start` |
-| Deploy Frontend (Vercel/Netlify) | Build: `npm run build` <br> Publish: `dist` |
+👩‍💻 **Suhani Gupta**
+Full-Stack Developer • Project Lead
 
 ---
-
-## ✨ Contributors
-👩‍💻 **Suhani Gupta** – Full Stack Developer, Designer, and Project Lead  
