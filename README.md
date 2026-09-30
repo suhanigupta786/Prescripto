@@ -3,7 +3,7 @@
 **Prescripto** is a full-stack medical appointment booking and management platform connecting **patients, doctors, and admins** through a seamless web interface.
 Users can register, book appointments, and manage their medical profiles.
 Doctors manage availability and appointments.
-Admins control system-wide operations.
+Admins control system-wide operations. 
 
 ---
 
